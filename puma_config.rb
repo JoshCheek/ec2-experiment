@@ -26,5 +26,9 @@ state_path File.join(tmp_dir, 'puma.state')
 append_to_files = true
 stdout_redirect File.join(tmp_dir, 'puma_out.log'), File.join(tmp_dir, 'puma_err.log'), append_to_files
 
-# Serve on a socket so we don't need root access
+# Serve on port 3000, we've configured AWS to send port 80 requests to it
+# so this allows our app to bind to 3000, which it has permission to do,
+# but the outside world hits port 80
 bind 'tcp://0.0.0.0:3000'
+
+# ssl_bind '0.0.0.0', '3000', { key: path_to_key, cert: path_to_cert }
